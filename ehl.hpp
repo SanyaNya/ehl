@@ -10,7 +10,7 @@
  * 3. Compose multiple errors
  * 4. Specialization of error handling mechanism per error
  * 5. Zero cost wrappers
- * 6. Support Boost.Stacktrace*/
+ * 6. Support std::stacktrace*/
 
 #include <type_traits>
 #include <utility>
