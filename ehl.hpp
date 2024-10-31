@@ -9,7 +9,8 @@
  * TODO:
  * 3. Compose multiple errors
  * 4. Specialization of error handling mechanism per error
- * 5. Zero cost wrappers*/
+ * 5. Zero cost wrappers
+ * 6. Support Boost.Stacktrace*/
 
 #include <type_traits>
 #include <utility>
