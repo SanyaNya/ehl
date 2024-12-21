@@ -20,19 +20,19 @@
 
 #define EHL_POLICY(P) [[maybe_unused]] constexpr auto EHP = ehl::Policy::P
 
-#define EHL_THROW_IF(COND, ERR)                                               \
-  do                                                                          \
-  {                                                                           \
-    if constexpr(EHP == ehl::Policy::Unreachable) assert(!(COND));            \
-                                                                              \
-    if(COND) [[unlikely]]                                                     \
-    {                                                                         \
-      if constexpr(EHP == ehl::Policy::Exception) throw (ERR);                \
-      if constexpr(EHP == ehl::Policy::Optional) return std::nullopt;         \
-      if constexpr(EHP == ehl::Policy::Expected) return std::unexpected(ERR); \
-      if constexpr(EHP == ehl::Policy::Terminate) std::terminate();           \
-      if constexpr(EHP == ehl::Policy::Unreachable) std::unreachable();       \
-    }                                                                         \
+#define EHL_THROW_IF(COND, ERR)                                                            \
+  do                                                                                       \
+  {                                                                                        \
+    if constexpr(EHP == ehl::Policy::Unreachable) assert(!(COND));                         \
+                                                                                           \
+    if(COND) [[unlikely]]                                                                  \
+    {                                                                                      \
+      if constexpr(EHP == ehl::Policy::Exception) [e = ERR] [[noreturn]] (){ throw e; }(); \
+      if constexpr(EHP == ehl::Policy::Optional) return std::nullopt;                      \
+      if constexpr(EHP == ehl::Policy::Expected) return std::unexpected(ERR);              \
+      if constexpr(EHP == ehl::Policy::Terminate) std::terminate();                        \
+      if constexpr(EHP == ehl::Policy::Unreachable) std::unreachable();                    \
+    }                                                                                      \
   }while(0)
 
 namespace ehl
